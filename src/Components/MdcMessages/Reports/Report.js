@@ -115,7 +115,7 @@ const Report = (props) => {
         //const path = 'http://localhost:8000/api/GenerateReport/' + analysis + '/' + occurences + '/' + legs + '/' + intermittent + '/' +
         //consecutiveDays + '/' + ata + '/' + eqid + '/'+ operator + '/' + messages + '/' + fromDate + '/' + toDate;
 
-        const path = 'http://20.85.211.143:8080/api/GenerateReport/' + analysis + '/' + occurences + '/' + legs + '/' + intermittent + '/' +
+        const path = 'https://mhirjapi77.azurewebsites.net/api/GenerateReport/' + analysis + '/' + occurences + '/' + legs + '/' + intermittent + '/' +
         consecutiveDays + '/' + ata + '/' + eqid + '/'+ operator + '/' + messages + '/' + fromDate + '/' + toDate;
 
           axios.post(path).then(function (res){
@@ -181,7 +181,7 @@ const Report = (props) => {
     });
 
     if (flag === false) {        
-      const flagPath = 'http://20.85.211.143:8080/api/GenerateReport/' + flagConditions.analysis + '/' + flagConditions.occurences + '/' + 
+      const flagPath = 'https://mhirjapi77.azurewebsites.net/api/GenerateReport/' + flagConditions.analysis + '/' + flagConditions.occurences + '/' + 
       flagConditions.legs + '/' + flagConditions.intermittent + '/' + flagConditions.days + '/' + flagConditions.HistAta + '/' + 
       flagConditions.HistExEqID + '/'+ flagConditions.operator + '/' + flagConditions.messages + '/' + flagConditions.fromDate + '/' + 
       flagConditions.toDate + '/' + flagConditions.flagList;
