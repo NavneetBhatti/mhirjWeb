@@ -65,7 +65,7 @@ export const ATAMainSelector = (props) => {
   const [ATAMainList,setATAMainList] = useState([]);
   useEffect(() => {
     //const path = 'http://localhost:8000/api/GenerateReport/ata_main/ALL'
-    const path = 'http://40.82.160.131/api/GenerateReport/ata_main/ALL'
+    const path = 'http://20.85.211.143:8080/api/GenerateReport/ata_main/ALL'
 
     try{
       axios.post(path).then(function (res) {
@@ -124,7 +124,7 @@ export const EqIDSelector = (props) => {
   const [EqID, setEqID] = React.useState([]);
   const [EqList,setEqIDList] = useState([]);
   useEffect(() => {
-    const path = 'http://40.82.160.131/api/GenerateReport/equation_id/ALL'
+    const path = 'http://20.85.211.143:8080/api/GenerateReport/equation_id/ALL'
     //const path = 'http://localhost:8000/api/GenerateReport/equation_id/ALL'
 
     try{
