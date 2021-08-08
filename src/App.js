@@ -18,6 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InfoSharpIcon from '@material-ui/icons/InfoSharp';
 import EqualizerSharpIcon from '@material-ui/icons/EqualizerSharp';
 import ShowChartSharpIcon from '@material-ui/icons/ShowChartSharp';
+import AttachFileSharpIcon from '@material-ui/icons/AttachFileSharp';
 import Button from '@material-ui/core/Button';
 import TableChartSharpIcon from '@material-ui/icons/TableChartSharp';
 import AssessmentSharpIcon from '@material-ui/icons/AssessmentSharp';
@@ -42,6 +43,7 @@ import Chart4 from './Components/Chart4';
 import Chart5 from './Components/Chart5';
 import Scatter1 from './Components/Scatter1';
 import Stacked from './Components/Stacked';
+import FileUpload from './Components/FileUpload';
 import Analysis from './Components/MdcMessages/GenerateReport/Analysis';
 import Report from './Components/MdcMessages/Reports/Report';
 import Correlation from './Components/Correlation/Correlation';
@@ -49,6 +51,7 @@ import FlagReport from './Components/MdcMessages/Reports/FlagReport/FlagReport';
 import TimelineSharpIcon from '@material-ui/icons/TimelineSharp';
 import Rawdata from './Components/MdcMessages/Reports/Rawdata/RawMdcMessages';
 import TrendingUpSharpIcon from '@material-ui/icons/TrendingUpSharp';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const drawerWidth = 330;
 const useStyles = makeStyles((theme) => ({
@@ -145,6 +148,7 @@ const useStyles = makeStyles((theme) => ({
   nested_1: {
     paddingLeft: theme.spacing(3),
   },
+ 
 }));
 
 
@@ -159,6 +163,10 @@ export default function MiniDrawer() {
   const [openGraphs, setOpenGraphs] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
+  };
+
+  const handleClickAway = () => {
+    setOpen(false);
   };
 
   const handleDrawerClose = () => {
@@ -201,8 +209,14 @@ export default function MiniDrawer() {
             </IconButton>
             <img src={mhirjLogoColored} style={{ height: 78, width: 150 }} />
             <typography style={{ color: "#001c3e", fontSize: "24px", fontFamily: "Times New Roman" }}>MDC Trend Analysis Tool</typography>
+
           </Toolbar>
         </AppBar>
+        <ClickAwayListener
+            mouseEvent="onMouseDown"
+            touchEvent="onTouchStart"
+            onClickAway={handleClickAway}
+          >
         <Drawer
           variant="permanent"
           className={clsx(classes.drawer, {
@@ -215,11 +229,13 @@ export default function MiniDrawer() {
               [classes.drawerClose]: !open,
             }),
           }}>
+       
           <div className={classes.toolbar}>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon style={{ color: "#001c3e" }} /> : <ChevronLeftIcon style={{ color: "#001c3e" }} />}
             </IconButton>
           </div>
+          
           <Divider />
           <List>
             <ListItem button onClick={handleMainClick} disablePadding>
@@ -362,7 +378,6 @@ export default function MiniDrawer() {
                   </ListItem>
                 </Link>
               </List>
-
             </Collapse>
 
             <ListItem >
@@ -376,10 +391,24 @@ export default function MiniDrawer() {
               </Link>
             </ListItem>
 
-          </List>
-          <Divider />
+            <ListItem >
+              <Link to="/fileUpload" style={{ textDecoration: 'none' }}>
+                <ListItemIcon>
+                  <AttachFileSharpIcon style={{ color: "#001c3e" }} />
+                </ListItemIcon>
+                <Button variant="contained" color="#d8e4f0">
+                  <typography>File Upload</typography>
+                </Button>
+              </Link>
+            </ListItem>
 
+          </List>
+
+          <Divider />
         </Drawer>
+        </ClickAwayListener>
+        
+
         <main className={classes.content}>
           <div className={classes.toolbar} />
 
@@ -425,6 +454,9 @@ export default function MiniDrawer() {
             </Route>
             <Route path="/corr">
               <Correlation />
+            </Route>
+            <Route path="/fileUpload">
+              <FileUpload />
             </Route>
           </Switch>
         </main>

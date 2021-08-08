@@ -51,7 +51,7 @@ export default function Scatter1() {
     e.preventDefault();
 
     //const path = 'http://localhost:8000/scatter_chart_MDC_PM/' + data_chart1.from_date + '/' + data_chart1.to_date;
-    const path = 'https://mhirjapi77.azurewebsites.net/api/scatter_chart_MDC_PM/' + data_chart1.from_date + '/' + data_chart1.to_date;
+    const path = 'https://mhirjapi.azurewebsites.net/api/scatter_chart_MDC_PM/' + data_chart1.from_date + '/' + data_chart1.to_date;
 
 
     //console.log(path);

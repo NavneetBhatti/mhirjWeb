@@ -66,7 +66,7 @@ export default function Chart5() {
 
 
    // const path = 'http://localhost:8000/chart_five/' + data_chart5.aircraft_no + '/' + data_chart5.equation_id + '/' + flightphase + '/' + data_chart5.from_date + '/' + data_chart5.to_date;
-    const path = 'https://mhirjapi77.azurewebsites.net/api/chart_five/' + data_chart5.aircraft_no + '/' + data_chart5.equation_id + '/' + flightphase + '/' + data_chart5.from_date + '/' + data_chart5.to_date;
+    const path = 'https://mhirjapi.azurewebsites.net/api/chart_five/' + data_chart5.aircraft_no + '/' + data_chart5.equation_id + '/' + flightphase + '/' + data_chart5.from_date + '/' + data_chart5.to_date;
 
 
     axios.post(path)

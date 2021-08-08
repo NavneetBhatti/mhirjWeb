@@ -53,7 +53,7 @@ export default function Chart2() {
 
 
    //const path = 'http://localhost:8000/chart_two/' + data_chart2.top_value + '/' + data_chart2.ata + '/' + data_chart2.from_date + '/' + data_chart2.to_date;
-    const path = 'https://mhirjapi77.azurewebsites.net/api/chart_two/' + data_chart2.top_value + '/' + data_chart2.ata + '/' + data_chart2.from_date + '/' + data_chart2.to_date;
+    const path = 'https://mhirjapi.azurewebsites.net/api/chart_two/' + data_chart2.top_value + '/' + data_chart2.ata + '/' + data_chart2.from_date + '/' + data_chart2.to_date;
 
 
     axios.post(path)

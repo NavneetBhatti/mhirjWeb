@@ -139,7 +139,7 @@ useEffect(() => {
  });
 
  if (flag === false) {  
-    const path = 'https://mhirjapi77.azurewebsites.net/api/MDCRawData/' + rawDataConditions.ata + '/' + rawDataConditions.eqID + '/' + rawDataConditions.operator + 
+    const path = 'https://mhirjapi.azurewebsites.net/api/MDCRawData/' + rawDataConditions.ata + '/' + rawDataConditions.eqID + '/' + rawDataConditions.operator + 
     '/' + rawDataConditions.messages + '/' + rawDataConditions.fromDate + '/' + rawDataConditions.toDate;
 
       axios.post(path).then(function (res) {

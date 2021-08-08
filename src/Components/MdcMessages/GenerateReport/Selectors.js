@@ -4,7 +4,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-//Multiple select filters
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
@@ -33,11 +32,24 @@ const MessagesList = ['Include', 'Exclude'];
 
 export const AirlineOperatorSelector = (props) => {
   const classes = useStyles();
-  const [airline, setAirline] = React.useState('');
+  const [airline, setAirline] = useState('');
+
+  useEffect(() => {
+    if(props.operator){
+      props.handleAirlineChange(props.operator);
+      setAirline(props.operator);
+    } 
+  },[props.operator]);
 
   const handleAirlineChange = (event) => {
-    setAirline(event.target.value);
-    props.handleAirlineChange(event.target.value);
+    if ( event.target.value === "none"){
+      setAirline("");
+      props.handleAirlineChange("");
+    }
+    else{
+      setAirline(event.target.value);
+      props.handleAirlineChange(event.target.value);
+    }  
   };
 
   return(
@@ -61,11 +73,10 @@ export const AirlineOperatorSelector = (props) => {
 
 export const ATAMainSelector = (props) => {
   const classes = useStyles();
-  const [ATAMain, setATAMain] = React.useState([]);
+  const [ATAMain, setATAMain] = useState([]);
   const [ATAMainList,setATAMainList] = useState([]);
   useEffect(() => {
-    //const path = 'http://localhost:8000/api/GenerateReport/ata_main/ALL'
-    const path = 'https://mhirjapi77.azurewebsites.net/api/GenerateReport/ata_main/ALL'
+    const path = 'http://20.85.211.143:8080/api/GenerateReport/ata_main/ALL'
 
     try{
       axios.post(path).then(function (res) {
@@ -81,22 +92,36 @@ export const ATAMainSelector = (props) => {
     }
 },[]);
 
+ 
   const handleATAChange = (event, values) => {
-    var copy = [];
-    if(Object.values(values)[0] === "ALL" && ATAMain.length !== 0){
-      copy.push(Object.values(values)[1]);
-      setATAMain(copy);
-      }
-    else{
-      setATAMain(values);
-    }
+    const ATAValues = [];
     if(values.includes("ALL")){
+      ATAValues.push("ALL");
+      setATAMain(ATAValues);
       props.handleATAChange("ALL");
-    }else{
-      let ataList =  "('"+ values.join("','") +"')";
+    }
+    else{
+      setATAMain(values);    
+      let ataList = Object.values(values).length >0 ?  "('"+ values.join("','") +"')" : "";
       props.handleATAChange(ataList);
     }
   };
+
+  useEffect(() => {
+    if(props.ata){
+      if(props.ata == 'ALL') {
+          setATAMain(['ALL']);
+          props.handleATAChange("ALL");
+      }
+      else {
+          var pattern = /(\d+)/g;
+          let vals = props.ata.match(pattern);
+          setATAMain(vals);
+          props.handleATAChange(props.ata);
+          //console.log("vals =",vals);
+      } 
+    }
+  },[props.ata])
 
   return(
     <Autocomplete
@@ -121,11 +146,10 @@ export const ATAMainSelector = (props) => {
 
 export const EqIDSelector = (props) => {
   const classes = useStyles();
-  const [EqID, setEqID] = React.useState([]);
+  const [EqID, setEqID] = useState([]);
   const [EqList,setEqIDList] = useState([]);
   useEffect(() => {
-    const path = 'https://mhirjapi77.azurewebsites.net/api/GenerateReport/equation_id/ALL'
-    //const path = 'http://localhost:8000/api/GenerateReport/equation_id/ALL'
+    const path = 'http://20.85.211.143:8080/api/GenerateReport/equation_id/ALL'
 
     try{
       axios.post(path).then(function (res) {
@@ -142,25 +166,38 @@ export const EqIDSelector = (props) => {
 },[]);
 
   const handleEqIDChange = (event, values) => {
-    console.log(values)
-    var copy = [];
-    //Analysis inputs, as soon as one ATA under “ATA Main” is selected the “ALL” should de-select. 
-    if(Object.values(values)[0] === "NONE" && EqID.length !== 0){
-      copy.push(Object.values(values)[1]);
-      setEqID(copy);
-      }
-    else{
-      setEqID(values);
-    }
-   
+    const EqIDValues = [];
     if(values.includes("NONE")){
+      EqIDValues.push("NONE");
+      setEqID(EqIDValues);
       props.handleEqIDChange("NONE");
     }
     else{
-      let eqIDLIST =  "('"+ values.join("','") +"')";
+      setEqID(values);    
+      let eqIDLIST = Object.values(values).length >0 ?  "('"+ values.join("','") +"')" : "";
       props.handleEqIDChange(eqIDLIST);
     }
   };
+
+  useEffect(() => {
+    if(props.eqID){
+      if(props.eqID == 'NONE') {
+          setEqID(['NONE']);
+          props.handleEqIDChange("NONE");
+      }
+      else {
+          props.handleEqIDChange(props.eqID);
+          // console.log(props.eqID)
+          let var1 = props.eqID.substring(1);
+      
+
+          var1 = var1.substring(0, var1.length - 1).replace(/'/g,'').split(',');
+          console.log("vals = ", var1)
+          setEqID(var1);
+          
+      } 
+    }
+  },[props.eqID])
 
   return(
 
@@ -187,16 +224,40 @@ export const EqIDSelector = (props) => {
 
 export const MessagesSelector = (props) => {
   const classes = useStyles();
-  const [messages, setIncludeMessages] = React.useState('');
+  const [messages, setIncludeMessages] = useState('');
 
   const handleMessagesChange = (event) => {
-    let value = 0;
-    if(event.target.value == 'Include'){
+    let value;
+    if (event.target.value === "none"){
+      value = "";
+    }
+    else if (event.target.value === 'Include'){
       value = 1;
+    }
+    else{
+      value = 0;
     }
     setIncludeMessages(event.target.value);
     props.handleMessagesChange(value);
   };
+
+  useEffect(() => {
+    
+    if (props.messages === 0 || props.messages === 1 ) {
+    
+      if (props.messages == 0 || props.messages == "0") 
+      {
+          setIncludeMessages('Exclude');
+          props.handleMessagesChange("0");
+          
+      }
+      else if (props.messages === 1 || props.messages === "1"){
+          setIncludeMessages('Include');
+          props.handleMessagesChange("1");
+          console.log("include =", props.messages)
+      }
+    }
+  },[props.messages]);
 
   return(
     <FormControl variant="outlined" className={classes.formControl}>

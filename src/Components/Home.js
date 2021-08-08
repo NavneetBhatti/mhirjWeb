@@ -33,7 +33,7 @@ export default function Chart1() {
 
   useEffect(() => {
     //const path = 'http://localhost:8000/Landing_Chart_B'
-    const path = 'https://mhirjapi77.azurewebsites.net/api/Landing_Chart_B'
+    const path = 'https://mhirjapi.azurewebsites.net/api/Landing_Chart_B'
 
 
     axios.post(path)
@@ -125,7 +125,7 @@ export default function Chart1() {
 
 
     //const path1 = 'http://localhost:8000/scatter_chart_MDC_PM'
-    const path1 = 'https://mhirjapi77.azurewebsites.net/api/scatter_chart_MDC_PM'
+    const path1 = 'https://mhirjapi.azurewebsites.net/api/scatter_chart_MDC_PM'
 
 
     axios.post(path1).then(res => {
